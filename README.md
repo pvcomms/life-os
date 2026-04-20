@@ -27,3 +27,23 @@ Autonomous life OS for Param Vaswani. Eight Claude agents running on scheduled-t
 ## Essays
 
 Monthly synthesis drafts land in `essays/` as PRs. Review before publishing to Substack.
+
+## Live runtime
+
+Non-linear agents (currently `morning-brief`, `friday-lessons`) run via `runtime/planner.py`. Each agent decomposes a top-level goal into a sub-goal tree and falls back per-leaf on failure instead of crashing the run. Decision trees persist to `logs/<run-id>.json`; a rolling event stream writes to `logs/stream.jsonl`.
+
+```bash
+# run an agent now
+bin/life-os run morning-brief
+bin/life-os run morning-brief --fail whoop --fail gmail   # rehearse degradation
+bin/life-os run friday-lessons                            # dry-run by default
+
+# follow the live stream (color by agent)
+bin/life-os tail
+bin/life-os tail --agent morning-brief --kinds node_end,run_end
+
+# launch the web dashboard — SSE, 200-line window, reconnects on error
+bin/life-os dash            # http://127.0.0.1:8787
+```
+
+The dashboard is warm monochrome, Fraunces + JetBrains Mono, one-color-per-agent dots, entry motion on every event.

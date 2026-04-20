@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>life-os · live</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --paper: #f7f6f3;
+        --paper-2: #faf9f6;
+        --ink: #111111;
+        --ink-2: #3a3a37;
+        --rule: #eae8e1;
+        --accent: #a24e2c; /* terracotta */
+        --ok: #4a6b3a;
+        --warn: #8a6b1f;
+        --fail: #9a2a2a;
+        --recovered: #6b4a8a;
+        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        --serif: "Fraunces", ui-serif, Georgia, serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #17150f;
+          --paper-2: #1d1a14;
+          --ink: #eeece4;
+          --ink-2: #b9b4a6;
+          --rule: #2a2620;
+          --accent: #d67a55;
+          --ok: #9bbd82;
+          --warn: #d6b166;
+          --fail: #d68a7a;
+          --recovered: #b9a2d6;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--serif);
+        font-feature-settings: "ss01", "cv11";
+        -webkit-font-smoothing: antialiased;
+      }
+      body {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 64px 40px 96px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--rule);
+        margin-bottom: 40px;
+      }
+      h1 {
+        font-weight: 400;
+        font-size: 28px;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--ink-2);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--ink-2);
+        transition: background 400ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .dot.live {
+        background: var(--ok);
+        box-shadow: 0 0 0 3px rgba(74, 107, 58, 0.15);
+      }
+      .dot.gone {
+        background: var(--fail);
+      }
+      #log {
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.65;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 2px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 88px 160px 110px 1fr;
+        gap: 16px;
+        padding: 6px 12px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        animation: enter 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .row:hover {
+        border-color: var(--rule);
+        background: var(--paper-2);
+      }
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .time {
+        color: var(--ink-2);
+      }
+      .agent {
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .agent::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--agent-color, var(--ink-2));
+        margin-right: 8px;
+        transform: translateY(-1px);
+      }
+      .kind {
+        color: var(--ink-2);
+      }
+      .kind[data-k="run_start"],
+      .kind[data-k="run_end"] {
+        color: var(--accent);
+      }
+      .kind[data-k="node_error"],
+      .kind[data-k="fallback_start"] {
+        color: var(--fail);
+      }
+      .detail {
+        color: var(--ink-2);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .detail .ok {
+        color: var(--ok);
+      }
+      .detail .failed {
+        color: var(--fail);
+      }
+      .detail .recovered {
+        color: var(--recovered);
+      }
+      footer {
+        margin-top: 48px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--ink-2);
+        letter-spacing: 0.04em;
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>life-os <em>live</em></h1>
+      <div class="meta status">
+        <span class="dot" id="dot"></span>
+        <span id="state">connecting</span>
+      </div>
+    </header>
+
+    <main id="log" role="log" aria-live="polite"></main>
+
+    <footer>
+      <span id="count">0 events</span>
+      <span>SSE · 200 line window</span>
+    </footer>
+
+    <script>
+      const log = document.getElementById("log");
+      const dot = document.getElementById("dot");
+      const state = document.getElementById("state");
+      const count = document.getElementById("count");
+
+      const LIMIT = 200;
+      let seen = 0;
+      const agentColors = new Map();
+      // Warm palette that doesn't fight the paper tone
+      const palette = [
+        "#a24e2c",
+        "#4a6b3a",
+        "#6b4a8a",
+        "#8a6b1f",
+        "#3a5a6b",
+        "#5a3a4a",
+        "#2d5a4a",
+        "#7a4a2a",
+      ];
+
+      function colorFor(agent) {
+        if (!agentColors.has(agent)) {
+          agentColors.set(agent, palette[agentColors.size % palette.length]);
+        }
+        return agentColors.get(agent);
+      }
+
+      function fmtTime(ts) {
+        const d = new Date(ts * 1000);
+        return d.toTimeString().slice(0, 8);
+      }
+
+      function detailFor(ev) {
+        if (ev.kind === "run_start") return `goal = ${ev.goal || ""}`;
+        if (ev.kind === "run_end")
+          return `<span class="${ev.status}">${ev.status}</span> · ${ev.duration_ms}ms`;
+        if (ev.kind === "node_start")
+          return `${ev.leaf ? "leaf" : "branch"} · ${ev.node}`;
+        if (ev.kind === "node_end") {
+          const s = ev.status;
+          const fb = ev.fallback_used ? " · fallback" : "";
+          const last = ev.last_line ? ` · ${ev.last_line}` : "";
+          return `<span class="${s}">${s}</span>${fb} · ${ev.node}${last}`;
+        }
+        if (ev.kind === "node_error") return `${ev.node} · ${ev.error}`;
+        if (ev.kind === "fallback_start") return `replan · ${ev.node}`;
+        return JSON.stringify(ev);
+      }
+
+      function append(ev) {
+        const row = document.createElement("div");
+        row.className = "row";
+        row.style.setProperty("--agent-color", colorFor(ev.agent));
+        row.innerHTML = `
+          <div class="time">${fmtTime(ev.ts)}</div>
+          <div class="agent">${ev.agent}</div>
+          <div class="kind" data-k="${ev.kind}">${ev.kind}</div>
+          <div class="detail">${detailFor(ev)}</div>
+        `;
+        log.prepend(row);
+        while (log.children.length > LIMIT) log.removeChild(log.lastChild);
+        seen += 1;
+        count.textContent = `${seen} event${seen === 1 ? "" : "s"}`;
+      }
+
+      function setState(live, label) {
+        dot.className = "dot " + (live ? "live" : "gone");
+        state.textContent = label;
+      }
+
+      let es;
+      function connect() {
+        setState(false, "connecting");
+        es = new EventSource("/events");
+        es.onopen = () => setState(true, "live");
+        es.onerror = () => {
+          setState(false, "reconnecting");
+          es.close();
+          setTimeout(connect, 1500);
+        };
+        es.onmessage = (msg) => {
+          try {
+            append(JSON.parse(msg.data));
+          } catch {}
+        };
+      }
+      connect();
+    </script>
+  </body>
+</html>

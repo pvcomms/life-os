@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+"""life-os CLI — runs agents, tails the live stream, launches the dashboard.
+
+Usage:
+  life-os tail [--agent NAME] [--kinds K,K]
+  life-os dash [--port 8787]
+  life-os run  morning-brief [--fail whoop ...]
+  life-os run  friday-lessons [--fail notion ...]
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+STREAM = Path(os.environ.get("LIFEOS_STREAM", ROOT / "logs" / "stream.jsonl"))
+
+AGENT_COLORS = {
+    # ANSI 256 — warm, low-saturation
+    "morning-brief": "\033[38;5;173m",      # terracotta
+    "friday-lessons": "\033[38;5;108m",     # moss
+    "keep-monitor": "\033[38;5;96m",        # plum
+    "whoop-recovery-check": "\033[38;5;138m",
+    "focus-kickoff": "\033[38;5;109m",
+    "monthly-synthesis": "\033[38;5;179m",
+    "evening-postmortem": "\033[38;5;103m",
+}
+DIM = "\033[2m"
+RESET = "\033[0m"
+BOLD = "\033[1m"
+
+
+def color_for(agent: str) -> str:
+    return AGENT_COLORS.get(agent, "\033[38;5;245m")
+
+
+def fmt_event(ev: dict) -> str:
+    ts = time.strftime("%H:%M:%S", time.localtime(ev.get("ts", time.time())))
+    agent = ev.get("agent", "?")
+    kind = ev.get("kind", "?")
+    c = color_for(agent)
+
+    if kind == "run_start":
+        body = f"goal = {ev.get('goal', '')}"
+    elif kind == "run_end":
+        body = f"{ev.get('status')} · {ev.get('duration_ms')}ms"
+    elif kind == "node_start":
+        body = f"{'leaf' if ev.get('leaf') else 'branch'} · {ev.get('node')}"
+    elif kind == "node_end":
+        fb = " · fallback" if ev.get("fallback_used") else ""
+        last = f" · {ev.get('last_line')}" if ev.get("last_line") else ""
+        body = f"{ev.get('status')}{fb} · {ev.get('node')}{last}"
+    elif kind == "node_error":
+        body = f"{ev.get('node')} · {ev.get('error')}"
+    elif kind == "fallback_start":
+        body = f"replan · {ev.get('node')}"
+    else:
+        body = json.dumps(ev, default=str)
+
+    return f"{DIM}{ts}{RESET}  {c}{agent:<22}{RESET}  {BOLD}{kind:<16}{RESET}  {body}"
+
+
+def cmd_tail(args):
+    if not STREAM.exists():
+        STREAM.parent.mkdir(parents=True, exist_ok=True)
+        STREAM.touch()
+    # Seek to end and follow
+    with STREAM.open("r") as f:
+        f.seek(0, 2)
+        try:
+            while True:
+                line = f.readline()
+                if not line:
+                    time.sleep(0.25)
+                    continue
+                try:
+                    ev = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if args.agent and ev.get("agent") != args.agent:
+                    continue
+                if args.kinds and ev.get("kind") not in args.kinds:
+                    continue
+                print(fmt_event(ev), flush=True)
+        except KeyboardInterrupt:
+            print()
+            return
+
+
+def cmd_dash(args):
+    os.execvp(sys.executable, [sys.executable, "-m", "runtime.stream_server", str(args.port)])
+
+
+def cmd_run(args):
+    mod = {
+        "morning-brief": "runtime.agents.morning_brief",
+        "friday-lessons": "runtime.agents.friday_lessons",
+    }.get(args.agent)
+    if not mod:
+        print(f"unknown agent: {args.agent}", file=sys.stderr)
+        sys.exit(2)
+    cmd = [sys.executable, "-m", mod]
+    for f in args.fail or []:
+        cmd += ["--fail", f]
+    os.execvp(sys.executable, cmd)
+
+
+def main():
+    ap = argparse.ArgumentParser(prog="life-os")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    p_tail = sub.add_parser("tail", help="follow the live stream")
+    p_tail.add_argument("--agent", help="filter by agent name")
+    p_tail.add_argument("--kinds", type=lambda s: s.split(","), help="comma-separated event kinds")
+    p_tail.set_defaults(fn=cmd_tail)
+
+    p_dash = sub.add_parser("dash", help="launch the web dashboard")
+    p_dash.add_argument("--port", type=int, default=8787)
+    p_dash.set_defaults(fn=cmd_dash)
+
+    p_run = sub.add_parser("run", help="run a single agent now")
+    p_run.add_argument("agent", choices=["morning-brief", "friday-lessons"])
+    p_run.add_argument("--fail", action="append", help="simulate failure at a leaf")
+    p_run.set_defaults(fn=cmd_run)
+
+    args = ap.parse_args()
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL) if hasattr(signal, "SIGPIPE") else None
+    args.fn(args)
+
+
+if __name__ == "__main__":
+    main()
