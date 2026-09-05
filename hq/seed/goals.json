@@ -1,0 +1,42 @@
+[
+  {
+    "name": "BlueDot Technical AI Safety",
+    "horizon": "Now",
+    "target": "2026-09-07",
+    "status": "Alive",
+    "why": "The credential + community rung toward safety-adjacent lab work.",
+    "measure": "Accepted, course completed, final project submitted."
+  },
+  {
+    "name": "Parameters — essay a week",
+    "horizon": "Now",
+    "target": null,
+    "status": "Alive",
+    "why": "The writing leg is the thinnest AND load-bearing — structural, not wellness.",
+    "measure": "1 essay shipped per week."
+  },
+  {
+    "name": "German A1",
+    "horizon": "Now",
+    "target": "2026-09-03",
+    "status": "Alive",
+    "why": "Germany intent ~Sep; language floor before landing.",
+    "measure": "A1 self-test passed."
+  },
+  {
+    "name": "Frontier-lab hire",
+    "horizon": "Long",
+    "target": null,
+    "status": "Alive",
+    "why": "Evals/agent-reliability at a frontier lab, or founding-generalist at an AI-native startup.",
+    "measure": "Signed offer."
+  },
+  {
+    "name": "Relocation reset",
+    "horizon": "Year",
+    "target": null,
+    "status": "Alive",
+    "why": "Identity independent of external validation; normal life at a higher level.",
+    "measure": "Landed, apartment, working routine in the new country."
+  }
+]

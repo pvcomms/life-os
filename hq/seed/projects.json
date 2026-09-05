@@ -1,0 +1,293 @@
+[
+  {
+    "name": "BlueDot prep",
+    "status": "Active",
+    "area": "Learn",
+    "goal": "BlueDot Technical AI Safety",
+    "oneliner": "Apply + finish prep plan (~/bluedot-prep.md) before the Sep 7 deadline.",
+    "deadline": "2026-09-07",
+    "link": null
+  },
+  {
+    "name": "Parameters",
+    "status": "Active",
+    "area": "Write",
+    "goal": "Parameters — essay a week",
+    "oneliner": "The masthead: paramvaswani.com + paramete.rs live, essays shipping weekly.",
+    "deadline": null,
+    "link": "https://paramvaswani.vercel.app",
+    "blocked_on": "DNS unpointed"
+  },
+  {
+    "name": "German Month",
+    "status": "Active",
+    "area": "Learn",
+    "goal": "German A1",
+    "oneliner": "0→A1 sprint; hub ~/german-month.md.",
+    "deadline": "2026-09-03",
+    "link": null
+  },
+  {
+    "name": "Python Sprint",
+    "status": "Active",
+    "area": "Learn",
+    "goal": null,
+    "oneliner": "Hub ~/python-sprint.md. Tutor-mode only — Claude never writes the Python.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Frontier hire push",
+    "status": "Active",
+    "area": "Career",
+    "goal": "Frontier-lab hire",
+    "oneliner": "Evals/BizOps angle; warm-intro map in memory; LinkedIn kit v2 final.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Relocation reset",
+    "status": "Active",
+    "area": "Career",
+    "goal": "Relocation reset",
+    "oneliner": "Germany ~Sep; needs ground-truth pass (visa/meds) before anything is booked.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Keep / Cyborg Market",
+    "status": "Active",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Background maintenance only; keep-monitor watches settler + deploy health.",
+    "deadline": null,
+    "link": "https://keep-wine.vercel.app"
+  },
+  {
+    "name": "life-os",
+    "status": "Active",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "The agent stack that runs this system.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "param-os",
+    "status": "Active",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Dashboard; the Rail glass is the next build (lib/rail.ts started).",
+    "deadline": null,
+    "link": "https://param-os.vercel.app"
+  },
+  {
+    "name": "claude-archive",
+    "status": "Active",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Everything Index of CC output; Codeberg home still needs the verb.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Yomu",
+    "status": "Active",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Local-first newsletter reader at :4545. LOCAL-ONLY — never deploy.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Pickless",
+    "status": "Active",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Food-decision agent; maintenance.",
+    "deadline": null,
+    "link": "https://picklessai.vercel.app"
+  },
+  {
+    "name": "AT Protocol week",
+    "status": "Parked",
+    "area": "Learn",
+    "goal": null,
+    "oneliner": "Plan ~/atproto-week.md; compressed path.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Open-LLM week",
+    "status": "Parked",
+    "area": "Learn",
+    "goal": null,
+    "oneliner": "OpenRouter + LM Studio on the M3 Ultra; ~/open-llm-week.md.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Stats course",
+    "status": "Parked",
+    "area": "Learn",
+    "goal": null,
+    "oneliner": "14 lessons ~/statistics-course.md; audits his own evals.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "podcast-pitch",
+    "status": "Parked",
+    "area": "Write",
+    "goal": null,
+    "oneliner": "Deck for 2-host podcast with Aryan Patil; local WIP.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "CMCHP research",
+    "status": "Parked",
+    "area": "Write",
+    "goal": null,
+    "oneliner": "Cross-Model Context Handoff Protocol v0.1 — paper + benchmark.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Sadboi book",
+    "status": "Parked",
+    "area": "Write",
+    "goal": null,
+    "oneliner": "Coffee-table book; PERSONAL — never publish.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Claude Code Playbook",
+    "status": "Parked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Public monorepo: 4 MCPs + 11 skills + 15 hooks; domain needs A record.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "mcp-red-team",
+    "status": "Parked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Adversarial MCP security scanner, 8 attack categories (private).",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Biometric Inference Proxy",
+    "status": "Parked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Hono proxy: Whoop recovery → model behavior modes (private).",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "arxiv-digest",
+    "status": "Parked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "arxiv URL → Param-stack digest.",
+    "deadline": null,
+    "link": "https://arxiv-digest-hazel.vercel.app"
+  },
+  {
+    "name": "Wired Different",
+    "status": "Parked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Vibecoding × ADHD course; landing live, no GTM.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Build Yourself v3",
+    "status": "Parked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Maintenance only.",
+    "deadline": null,
+    "link": "https://build-yourself-v3.vercel.app"
+  },
+  {
+    "name": "Board of Directors app",
+    "status": "Parked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Personal tool; maintenance.",
+    "deadline": null,
+    "link": "https://board-of-directors-app.vercel.app"
+  },
+  {
+    "name": "maj-companion",
+    "status": "Blocked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Mah jongg companion for mum; engine done.",
+    "deadline": null,
+    "link": null,
+    "blocked_on": "card photos from mum"
+  },
+  {
+    "name": "Plex media server",
+    "status": "Blocked",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "Plex + Sonarr + SABnzbd on the M1.",
+    "deadline": null,
+    "link": null,
+    "blocked_on": "paid signups"
+  },
+  {
+    "name": "DoorDrop hardware",
+    "status": "Dormant",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "ESP32 + OLED prototype; explicit-ask only.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "Stablecoin week",
+    "status": "Done",
+    "area": "Learn",
+    "goal": null,
+    "oneliner": "Curriculum completed Aug 3–9; 5 essay seeds extracted.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "MCP tool-selection eval",
+    "status": "Done",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "V2 cross-provider, 7 models, n=665.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "yt-tldr eval",
+    "status": "Done",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "40 videos × 4 models × judge.",
+    "deadline": null,
+    "link": null
+  },
+  {
+    "name": "biometric-json-eval",
+    "status": "Done",
+    "area": "Build",
+    "goal": null,
+    "oneliner": "29-case benchmark; quorum → ~0 dangerous errors.",
+    "deadline": null,
+    "link": null
+  }
+]

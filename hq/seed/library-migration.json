@@ -1,0 +1,34 @@
+{
+  "_comment": "Rail cards to migrate into Library during Phase E. Matching is fuzzy on title (case-insensitive substring). Cards not listed stay on the Rail. 'drop' cards are superseded by this build: mark Done with a note instead of migrating.",
+  "migrate": [
+    { "match": "universal truths", "kind": "Doc", "area": "Write" },
+    { "match": "glossary", "kind": "Reference", "area": "Write" },
+    { "match": "writing sample ideas", "kind": "Idea", "area": "Write" },
+    { "match": "dating doc", "kind": "Doc", "area": "Career" },
+    { "match": "3rd places", "kind": "Idea", "area": "Career" },
+    { "match": "world map of where", "kind": "Doc", "area": "Write" },
+    { "match": "number line off my life", "kind": "Doc", "area": "Write" },
+    { "match": "inneanagram", "kind": "Reference", "area": "Career" },
+    { "match": "jasmine sun article", "kind": "Reference", "area": "Career" },
+    { "match": "ai agent identities", "kind": "Idea", "area": "Build" },
+    { "match": "insurance for ai agent", "kind": "Idea", "area": "Build" },
+    {
+      "match": "data company re lived experience",
+      "kind": "Idea",
+      "area": "Build"
+    },
+    {
+      "match": "non profit animal agriculture",
+      "kind": "Idea",
+      "area": "Build"
+    },
+    { "match": "scripts", "kind": "Doc", "area": "Write" },
+    { "match": "in person work enviornmnet", "kind": "Doc", "area": "Career" }
+  ],
+  "drop": [
+    {
+      "match": "bottom of hub adition of goals",
+      "note": "Superseded — The Pass now carries Goals + the Map."
+    }
+  ]
+}
